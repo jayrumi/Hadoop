@@ -1,0 +1,8 @@
+Какие методы необходимо реализовать в пользовательском классе-наследнике InputFormat?
+
+
+ void setInputPath(Job, Path)
+ RecordReader<K, V> getKeyValue(InputSplit, Context)
+ List<InputSplit> getSplits(Context)                        +
+ RecordReader<K, V> createRecordReader(InputSplit, Context) +
+ List<InputSplit> splitData(Context)
