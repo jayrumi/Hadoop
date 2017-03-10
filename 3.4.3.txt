@@ -1,0 +1,26 @@
+Задача WordCount обрабатывает файл, состоящий из одной строки:
+
+veni vidi vici
+В качестве Combiner используется следующий класс: 
+
+public class WordCountCombiner extends Reducer<Text, IntWritable, Text, IntWritable> {
+
+    @Override
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) 
+                                                         throws IOException, InterruptedException {
+        int sum = 0;
+        for (IntWritable value : values) {
+            sum += value.get();
+        }
+        System.out.println("Hello!");
+        context.write(key, new IntWritable(sum));
+    }
+}
+
+Сколько раз на экране напечатается "Hello!" ?
+
+
+ 1 раз
+ Либо 3 раза, либо ни разу  +
+ Ни разу не напечатается
+ 3 раза
