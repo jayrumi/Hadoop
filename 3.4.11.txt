@@ -1,0 +1,9 @@
+Расположите в правильном порядке элементы, чтобы получилась команда для запуска MapReduce задачи.
+
+
+hadoop
+jar
+stepic.org.jar
+org.stepic.WordCount
+-D
+mapred.reduce.tasks=10
