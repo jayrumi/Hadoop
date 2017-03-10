@@ -1,0 +1,7 @@
+Вы создаете свой класс для ключа. От какого класса вы должны отнаследоваться?
+
+
+ WritableComparable +
+ WritableBase
+ Writable
+ IntWritable
