@@ -1,0 +1,29 @@
+Напишите программу, которая реализует In-mapper combining v.2 для задачи WordCount в Hadoop Streaming.
+
+Sample Input:
+  aut Caesar aut nihil
+  aut aut
+  de mortuis aut bene aut nihil
+
+Sample Output:
+  aut	6
+  mortuis	1
+  bene	1
+  Caesar	1
+  de	1
+  nihil	2
+  
+  
+# python 3
+
+import sys
+ 
+ar = []
+for line in sys.stdin:
+    for token in line.strip().split(" "):
+       ar.append(token)
+dct2 = {}
+for i in ar:
+	dct2.update({i:ar.count(i)})
+for d in dct2:
+	print(str(d) + str("\t") + str(dct2[d]))
