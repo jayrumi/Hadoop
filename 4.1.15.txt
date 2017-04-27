@@ -1,0 +1,43 @@
+Реализуйте mapper для задачи Cross-Correlation, который для каждого объекта из кортежа создает stripe.
+
+Mapper принимает на вход кортежи - строки, состоящие из объектов, разделенных пробелом.
+
+Mapper пишет данные в виде key / value, где key - объект, value - соответствующий stripe (пример: a:1,b:2,c:3)
+
+Sample Input:
+  a b
+  a b a c
+
+Sample Output:
+  a	b:1
+  b	a:1
+  a	b:1,c:1
+  b	a:2,c:1
+  a	b:1,c:1
+  c	b:1,a:2
+
+
+# python3
+import sys
+
+for token in sys.stdin:
+	arr =  token.strip().split()
+	for i in arr:
+		dic = {}
+		dic2 = {}
+		for j in arr:
+			if i != j:
+				if j in dic:
+					dic[j] = dic[j]+ 1
+				else:
+					dic[j] = 1
+				dic2[i] = dic
+		strn = ''
+		for key, value in dic2.items():
+			for k, v in value.items():
+				if strn == '':
+					strn = strn + str(k) + ':' + str(v)
+				else:
+					strn = strn + ',' + str(k) + ':' + str(v)
+			print('%s\t%s' % (key, strn))
+        	
