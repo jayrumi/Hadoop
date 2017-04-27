@@ -1,0 +1,60 @@
+Реализуйте reducer из задачи Distinct Values v2.
+
+Reducer принимает на вход строки, каждая из которых состоит из разделенных табуляцией значения и названия группы.
+
+Sample Input:
+  1	a
+  1	b
+  1	b
+  2	a
+  2	d
+  2	e
+  3	a
+  3	b
+
+Sample Output:
+  a	3
+  d	1
+  b	2
+  e	1
+
+
+from operator import itemgetter
+from itertools import groupby
+import sys
+
+current_word = None
+current_count = 0
+word = None
+arr_bef = []
+arr_gr = []
+arr = []
+elem = None
+
+for line in sys.stdin:
+	val, cat = line.strip().split('\t')
+	elem = str(val) + ' ' + str(cat)
+	arr_bef.append(str(elem))
+
+for gr in groupby(arr_bef):
+	arr_gr.append(gr[0])
+
+for token in arr_gr:
+
+    val = token.strip().split(' ', 1)[1]
+    arr.append(val)
+
+arr.sort()
+
+for word in arr:
+
+    if current_word == word:
+        current_count += 1
+    else:
+        if current_word:
+            print ('%s\t%s' % (current_word, current_count))
+        current_count = 1
+        current_word = word
+
+if current_word == word:
+    print ('%s\t%s' % (current_word, current_count))
