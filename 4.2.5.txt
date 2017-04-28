@@ -1,0 +1,28 @@
+Напишите reducer, который делает пересечение элементов из множества A и B. На вход в reducer приходят пары key / value, 
+  где key - элемент множества, 
+  value - маркер множества (A или B)
+  
+Sample Input:
+  1	A
+  2	A
+  2	B
+  3	B
+
+Sample Output:
+  2
+
+
+# python3
+import sys
+from itertools import groupby
+
+arr = []
+prev_val = None
+
+# input comes from STDIN
+for token in sys.stdin:
+	splittoken = token.strip().split()
+	if splittoken[0] == prev_val:
+		print(splittoken[0])
+	else:
+		prev_val = splittoken[0]
