@@ -1,0 +1,62 @@
+Реализуйте mapper в задаче поиска кратчайшего пути с помощью Hadoop Streaming.
+
+Входные и выходные данные: в качестве ключа идет номер вершины, значение состоит из двух полей, разделенных табуляцией:
+
+  1. Минимальное расстояние до данной вершины (если его еще нет, то пишется INF)
+  2. Список исходящих вершин (через "," в фигурных скобках) 
+
+Пример работы mapper на второй итерации обработки следующего графа:
+
+https://ucarecdn.com/135a6f6d-4785-4cb8-8686-2f25d21ef463/
+
+Sample Input:
+  1	0	{2,3,4}
+  2	1	{5,6}
+  3	1	{}
+  4	1	{7,8}
+  5	INF	{9,10}
+  6	INF	{}
+  7	INF	{}
+  8	INF	{}
+  9	INF	{}
+  10	INF	{}
+
+Sample Output:
+  1	0	{2,3,4}
+  2	1	{}
+  3	1	{}
+  4	1	{}
+  2	1	{5,6}
+  5	2	{}
+  6	2	{}
+  3	1	{}
+  4	1	{7,8}
+  7	2	{}
+  8	2	{}
+  5	INF	{9,10}
+  9	INF	{}
+  10	INF	{}
+  6	INF	{}
+  7	INF	{}
+  8	INF	{}
+  9	INF	{}
+  10	INF	{}
+
+
+#python3
+import sys
+import re
+
+for line in sys.stdin:
+    vertex, route, dict_ver = line.strip().split()
+    retoken = re.findall(r"[\w']+", dict_ver)
+
+    print('%s\t%s\t%s' % (vertex, route, dict_ver))
+
+    if route != 'INF' and len(retoken)>0:
+        for elem in retoken:
+            print( '%s\t%s\t%s' % (elem, str(int(route)+1), str('{}')) )
+    elif route == 'INF' and len(retoken)>0:
+        for elem in retoken:
+            print( '%s\t%s\t%s' % (elem, str('INF'), str('{}')) )
+
