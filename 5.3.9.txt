@@ -58,8 +58,8 @@ for line in sys.stdin:
         if prevDict != '{}':
             currDict = prevDict
     else:
-        print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(prevWeight), prevDict))
+        print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(round(prevWeight,3)), prevDict))
 
     prevVertex, prevWeight, prevDict = currVertex, currWeight, currDict
 
-print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(prevWeight), prevDict))
+print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(round(prevWeight,3)), prevDict))
