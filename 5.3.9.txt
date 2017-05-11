@@ -1,0 +1,64 @@
+Реализуйте reducer для алгоритма расчета PageRank с помощью Hadoop Streaming. Используйте упрощенный алгоритм (без случайных переходов).
+
+Входные и выходные данные: В качестве ключа идет номер вершины. Значение составное: через табуляцию записано значение PageRank (округленное до 3-го знака после запятой) и список смежных вершин (через "," в фигурных скобках).
+
+Пример работы reducer приведен для графа из лекции (при этом номера вершин приведены без n):
+
+https://ucarecdn.com/88aa9d54-f2e8-4010-b255-9107b4290e84/
+
+Sample Input:
+  1	0.067	{}
+  1	0.200	{2,4}
+  2	0.067	{}
+  2	0.100	{}
+  2	0.200	{3,5}
+  3	0.067	{}
+  3	0.100	{}
+  3	0.200	{4}
+  4	0.100	{}
+  4	0.200	{}
+  4	0.200	{5}
+  5	0.100	{}
+  5	0.200	{}
+  5	0.200	{1,2,3}
+
+Sample Output:
+  1	0.067	{2,4}
+  2	0.167	{3,5}
+  3	0.167	{4}
+  4	0.300	{5}
+  5	0.300	{1,2,3}
+
+
+
+#python3
+import sys
+import re
+
+prevVertex = None
+currVertex = None
+
+for line in sys.stdin:
+
+    if prevVertex == None:
+        prevVertex, prevWeight, prevDict = line.strip().split()
+        prevWeight = '0'
+
+    currVertex, currWeight, currDict = line.strip().split()
+
+    currWeight = float(currWeight)
+    prevWeight = float(prevWeight)
+
+    if currDict != '{}':
+        currWeight = float(0)
+
+    if currVertex == prevVertex:
+        currWeight = currWeight + prevWeight
+        if prevDict != '{}':
+            currDict = prevDict
+    else:
+        print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(prevWeight), prevDict))
+
+    prevVertex, prevWeight, prevDict = currVertex, currWeight, currDict
+
+print('%s\t%s\t%s' % (prevVertex, "{:.3f}".format(prevWeight), prevDict))
